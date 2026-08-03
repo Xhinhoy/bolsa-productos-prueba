@@ -27,3 +27,10 @@ CMD ["php-fpm"]
 FROM nginx:1.27-alpine AS web
 COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY public /var/www/html/public
+
+# ---------- tests ----------
+FROM fpm AS test
+USER root
+RUN composer install --no-interaction --no-scripts
+ENTRYPOINT []
+CMD ["php", "vendor/bin/phpunit", "--colors=always"]
