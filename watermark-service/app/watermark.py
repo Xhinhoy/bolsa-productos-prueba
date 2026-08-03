@@ -1,7 +1,7 @@
 from io import BytesIO
 
 from PIL import Image
-from pypdf import PdfReader, PdfWriter
+from pypdf import PageObject, PdfReader, PdfWriter
 from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
@@ -30,7 +30,7 @@ def _bake_opacity(image_bytes: bytes) -> ImageReader:
     return ImageReader(img)
 
 
-def _overlay(width: float, height: float, image: ImageReader):
+def _overlay(width: float, height: float, image: ImageReader) -> PageObject:
     buf = BytesIO()
     c = canvas.Canvas(buf, pagesize=(width, height))
     img_w, img_h = image.getSize()
@@ -60,7 +60,7 @@ def apply(pdf_bytes: bytes, image_bytes: bytes) -> bytes:
 
     image = _bake_opacity(image_bytes)
     writer = PdfWriter()
-    overlays: dict[tuple[int, int], object] = {}
+    overlays: dict[tuple[int, int], PageObject] = {}
 
     for page in reader.pages:
         w, h = float(page.mediabox.width), float(page.mediabox.height)
