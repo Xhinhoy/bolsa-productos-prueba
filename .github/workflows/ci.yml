@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  laravel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --target test -t app-test ./app
+      - run: docker run --rm app-test vendor/bin/pint --test
+      - run: docker run --rm app-test vendor/bin/phpstan analyse --memory-limit=512M
+      - run: docker run --rm app-test
+
+  watermark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build --target test -t wm-test ./watermark-service
+      - run: docker run --rm wm-test ruff check .
+      - run: docker run --rm wm-test mypy app
+      - run: docker run --rm wm-test python -m pytest -q
