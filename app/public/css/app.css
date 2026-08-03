@@ -1,0 +1,49 @@
+:root { --border: #d4d4d8; --error: #b91c1c; --ok: #15803d; }
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 2rem;
+    font: 16px/1.5 system-ui, sans-serif;
+    color: #18181b;
+    background: #fafafa;
+}
+
+.centered { display: grid; place-items: center; min-height: 100vh; }
+
+.card {
+    width: min(24rem, 100%);
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: .5rem;
+}
+
+h1 { margin-top: 0; font-size: 1.25rem; }
+
+label { display: block; margin-top: 1rem; font-weight: 600; }
+label.inline { display: flex; gap: .5rem; align-items: center; font-weight: 400; }
+
+input[type=email], input[type=password], input[type=text], input[type=file] {
+    width: 100%;
+    padding: .5rem;
+    border: 1px solid var(--border);
+    border-radius: .25rem;
+}
+
+button {
+    margin-top: 1.5rem;
+    padding: .6rem 1.2rem;
+    border: 0;
+    border-radius: .25rem;
+    background: #18181b;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+button:disabled { opacity: .6; cursor: progress; }
+
+.alert { padding: .75rem; border-radius: .25rem; }
+.alert-error { background: #fef2f2; color: var(--error); }
+.alert-ok { background: #f0fdf4; color: var(--ok); }
