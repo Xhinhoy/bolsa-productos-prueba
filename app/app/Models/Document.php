@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enums\DocumentStatus;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -21,6 +20,24 @@ class Document extends Model
         'error_message',
     ];
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function humanSize(): string
+    {
+        return $this->stored_size_bytes >= 1048576
+            ? round($this->stored_size_bytes / 1048576, 2).' MB'
+            : round($this->stored_size_bytes / 1024, 1).' KB';
+    }
+
+    /**
+     * @return array<string, string>
+     */
     protected function casts(): array
     {
         return [
@@ -29,17 +46,5 @@ class Document extends Model
             'stored_size_bytes' => 'integer',
             'page_count' => 'integer',
         ];
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    protected function humanSize(): Attribute
-    {
-        return Attribute::get(fn (): string => $this->stored_size_bytes >= 1048576
-            ? round($this->stored_size_bytes / 1048576, 2).' MB'
-            : round($this->stored_size_bytes / 1024, 1).' KB');
     }
 }

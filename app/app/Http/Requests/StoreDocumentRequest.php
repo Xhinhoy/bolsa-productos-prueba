@@ -8,7 +8,9 @@ class StoreDocumentRequest extends FormRequest
 {
     /**
      * mimes valida la extension; mimetypes inspecciona el contenido real via
-     * finfo. Con mimes a secas pasa un .exe renombrado a .pdf.
+&
+     *
+     * @return array<string, list<string>>
      */
     public function rules(): array
     {

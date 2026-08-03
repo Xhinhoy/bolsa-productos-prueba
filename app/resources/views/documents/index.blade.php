@@ -23,7 +23,7 @@
 <tr>
 <td>{{ $document->name }}</td>
 <td>{{ $document->original_filename }}</td>
-<td>{{ $document->human_size }}</td>
+<td>{{ $document->humanSize() }}</td>
 <td><span class="badge">{{ $document->status->label() }}</span></td>
 <td class="actions">
 <a href="{{ route('documents.download', $document) }}">Descargar</a>

@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Models\Document;
 use App\Models\User;
 use App\Services\WatermarkClient;
+use App\Services\WatermarkException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,12 +13,10 @@ use Throwable;
 
 class StoreWatermarkedDocument
 {
-    public function __construct(private readonly WatermarkClient $watermark)
-    {
-    }
+    public function __construct(private readonly WatermarkClient $watermark) {}
 
     /**
-     * @throws \App\Services\WatermarkException
+     * @throws WatermarkException
      */
     public function handle(User $user, string $name, UploadedFile $pdf, UploadedFile $image): Document
     {
